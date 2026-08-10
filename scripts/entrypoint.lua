@@ -2,6 +2,37 @@ require 'cairo'
 -- https://github.com/brndnmtthws/conky/wiki/Lua:-Drawing
 -- https://conky.sourceforge.net/variables.html
 
+
+-- Helper function from https://github.com/brndnmtthws/conky/wiki/Lua:-Drawing
+function hex_color(hex, alpha)
+    return tonumber(hex:sub(1, 2), 16) / 255,
+           tonumber(hex:sub(3, 4), 16) / 255,
+           tonumber(hex:sub(5, 6), 16) / 255,
+           alpha or 1
+end
+
+local bar_height = 242
+function create_bar(cr, x, y, variable, name)
+    -- Creating Bar
+    cairo_set_source_rgba(cr, hex_color("FFFFFF", 0.2))
+    cairo_rectangle(cr, x, y, 18, bar_height)
+    cairo_fill(cr)
+
+    -- Creating Filling
+    cairo_set_source_rgba(cr, hex_color("FF1111", 1))
+    local filling_size = bar_height * variable / 100
+    cairo_rectangle(cr, x, y + (bar_height- filling_size), 18, filling_size)
+    cairo_fill(cr)
+
+    -- Write text
+    cairo_set_source_rgba(cr, hex_color("FFFFFF", 1))
+    cairo_move_to(cr, x-2, y + bar_height + 25)
+    cairo_show_text(cr, name)
+    cairo_move_to(cr, x-2, y + bar_height + 40)
+    cairo_show_text(cr, variable.."%")
+
+end
+
 function conky_main()
     -- Conky Docs: https://github.com/brndnmtthws/conky/wiki/Lua:-Evaluation
 
@@ -12,6 +43,17 @@ function conky_main()
         conky_window.visual, conky_window.width, conky_window.height)
 
     local cr = cairo_create(surface)
+
+    -- Getting variables ------------------------------------------
+    local cpu_usage = conky_parse("${cpu}")
+    local memory_used = conky_parse("${memperc}")
+    local gpu_usage = conky_parse("${nvidia gpuutil}")
+
+    -- Making Bars ------------------------------------------------
+    create_bar(cr, 25, 200, memory_used, "RAM")
+    create_bar(cr, 70, 200, cpu_usage, "CPU")
+    create_bar(cr, 115, 200, gpu_usage, "GPU")
+    cairo_stroke(cr)
 
     cairo_destroy(cr)
 end
