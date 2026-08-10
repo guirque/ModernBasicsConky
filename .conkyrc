@@ -1,0 +1,71 @@
+-- Conky, a system monitor https://github.com/brndnmtthws/conky
+-- For more on Lua, see:
+-- https://www.lua.org/pil/contents.html
+
+-- Code built on top of default conky.conf file.
+
+conky.config = {
+    -- Window ---
+    alignment = 'top_left',
+    background = false,
+    border_width = 1,
+    default_color = 'white',
+    default_outline_color = 'white',
+    own_window=true,
+    own_window_type = 'normal',
+    own_window_hints = 'undecorated,below,skip_taskbar,sticky', -- https://github.com/brndnmtthws/conky/issues/1107#issuecomment-2049747728
+    own_window_colour = '#0a0a0a00', -- black
+    own_window_argb_visual=true,
+    own_window_argb_value=0, -- https://askubuntu.com/questions/941701/conky-transparent
+    draw_borders = false,
+    gap_x = 308,
+    gap_y = 290,
+    minimum_height = 700,
+    minimum_width = 290,
+    own_window_class = 'Conky',
+
+    -- Including Scripts
+    lua_load= '~/.config/conky/ModernBasicsConky/scripts/entrypoint.lua',
+    lua_draw_hook_pre='conky_main',
+
+    -- Other Settings
+    border_inner_margin=10, -- padding
+
+    default_shade_color = 'white',
+    double_buffer = true,
+    cpu_avg_samples = 2,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+    extra_newline = false,
+    font = 'DejaVu Sans Mono:size=12',
+    net_avg_samples = 2,
+    no_buffers = true,
+    out_to_console = false,
+    out_to_ncurses = false,
+    out_to_stderr = false,
+    out_to_x = true,
+    show_graph_range = false,
+    show_graph_scale = false,
+    stippled_borders = 0,
+    update_interval = 1.0,
+    uppercase = false,
+    use_spacer = 'none',
+    use_xft = true,
+
+
+}
+
+conky.text = [[
+${alignc}${color white}${font :size=70}${time %H:%M}${font}
+
+${alignc}${color white}${font :size=20}${time %d/%m/%Y}
+${color white}${font :size=14}${offset 150}Disk Space
+${color white}${font :size=18}${offset 150}${fs_used /home} / ${fs_size /home}
+${color white}${font :size=14}${offset 150}Network
+${color white}${offset 150} ${font Arial:size=18}↑ ${upspeed} ↓ ${downspeed} ${font DejaVu Sans Mono:size=18}
+${offset 150}${hr}
+${color white}${font :size=14}${offset 150}Processes
+${color white}${font :size=12}${offset 150}Name     CPU       Mem
+
+]]
