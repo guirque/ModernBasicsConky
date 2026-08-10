@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=conky
+Exec=conky -c ~/.config/conky/ModernBasicsConky/.conkyrc --daemonize --pause=3
+StartupNotify=false
+Terminal=false
