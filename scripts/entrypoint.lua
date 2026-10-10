@@ -22,7 +22,7 @@ function create_bar(cr, x, y, variable, name)
 
     -- Creating Filling
     cairo_set_source_rgba(cr, hex_color("FF1111", 1))
-    local filling_size = bar_height * variable / 100
+    local filling_size = bar_height * tonumber(variable) / 100
     cairo_rectangle(cr, x, y + (bar_height- filling_size), 18, filling_size)
     cairo_fill(cr)
 
@@ -53,7 +53,7 @@ function conky_main()
     -- Getting variables ------------------------------------------
     local cpu_usage = conky_parse("${cpu}")
     local memory_used = conky_parse("${memperc}")
-    local gpu_usage = conky_parse("${nvidia gpuutil}")
+    local gpu_usage = conky_parse("${exec nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits}")
 
     -- Making Bars ------------------------------------------------
     create_bar(cr, 25, 200, memory_used, "RAM")
