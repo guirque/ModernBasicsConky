@@ -25,11 +25,12 @@ conky.config = {
     own_window_class = 'Conky',
 
     -- Including Scripts
-    lua_load= '~/.config/conky/ModernBasicsConky/scripts/entrypoint.lua',
+    lua_load= os.getenv( "HOME" )..'/.config/conky/ModernBasicsConky/scripts/entrypoint.lua',
     lua_draw_hook_pre='conky_main',
 
     -- Other Settings
     border_inner_margin=10, -- padding
+    output_backend='x11',
 
     default_shade_color = 'white',
     double_buffer = true,

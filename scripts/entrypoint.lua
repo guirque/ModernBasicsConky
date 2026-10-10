@@ -40,6 +40,10 @@ function conky_main()
 
     if not conky_window then return end
 
+    -- `conky_surface` is the new way to load, but it seems to not be present in the distributed conky-all package.
+    -- local surface = conky_surface()
+    -- if not surface then return end
+
     local surface = cairo_xlib_surface_create(
         conky_window.display, conky_window.drawable,
         conky_window.visual, conky_window.width, conky_window.height)
