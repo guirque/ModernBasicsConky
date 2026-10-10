@@ -1,4 +1,6 @@
 require 'cairo'
+require 'cairo_xlib'
+
 -- https://github.com/brndnmtthws/conky/wiki/Lua:-Drawing
 -- https://conky.sourceforge.net/variables.html
 
